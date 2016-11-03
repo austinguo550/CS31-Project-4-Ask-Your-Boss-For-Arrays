@@ -35,6 +35,7 @@ int main(int argc, const char * argv[]) {
     printAll(array); //
     appendToAll(array, 5, "Smallberg");
     printAll(array); //
+    if (lookup(array, 3, "hiSmallberg") == 1) cerr << "Lookup works" << endl;
     return 0;
 }
 
@@ -49,8 +50,12 @@ int appendToAll(string a[], int n, string value){
 
 int lookup(const string a[], int n, string target) {
     if (n < 0) return -1; //if the number of positions to check is negative
-    
-    return n;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == target) {
+            return i;
+        }
+    }
+    return -1; //if target isn't in array or within first n elements
 }
 
 //int positionOfMax(const string a[], int n);

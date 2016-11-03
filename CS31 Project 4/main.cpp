@@ -58,7 +58,18 @@ int lookup(const string a[], int n, string target) {
     return -1; //if target isn't in array or within first n elements
 }
 
-//int positionOfMax(const string a[], int n);
+int positionOfMax(const string a[], int n) {
+    if (n < 0) return -1;
+    if (a[0] == "") return -1; // if this is an empty array
+    int i = 0;
+    string max = a[0];
+    for (; i < n; i++) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+    }
+    return i;
+}
 //int rotateLeft(string a[], int n, int pos);
 //int countRuns(const string a[], int n);
 //int flip(string a[], int n);

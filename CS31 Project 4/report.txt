@@ -1,0 +1,289 @@
+a.) During the development process, I only ran into one problem in the subsequence method that slowed down the completion of the project. The logic of my algorithm to determine whether a sequence of strings was identical or not was flawed because since the second array containing the sequence of strings to find in the first array will not necessarily show up at the beginning of the first array, I had to implement a form of nested loops with two different variables representing the indices of the position in each array that is being compared. On accident, after I already established that the string at position "i" in the first array was identical to the string at position "j = 0" in the second array (since it must be the first element of the second array) but before I entered the nested for loop to compare the sequences after the initial element I forgot to increment "i" to get the next element in the first array, though I incremented "j" to get the second element in the second array. This small bug cost me approximately 20 minutes to identify, as I had to test many test cases to try to pinpoint the problem and trace the code carefully.
+
+
+
+b.) 
+Boundary cases for n < 0 or n = 0
+1. Input n < 0 for all functions
+	To determine whether function will return -1 for bad parameter arguments saying that array size is negative
+2. Input n = 0 for appendToAll, flip, separate
+	To determine whether these functions will properly do nothing and return 0, not -1. This is because if there are no elements from the argument to consider in the array, the function should simply not do anything as it is supposed to just modify the array’s n elements and will not have to access any out of bound elements in the array
+3. Input n less than the array size for any function (for example, input n = 3 when array size is 12)
+	To see whether function will only operate on the n elements that the function is aware of, and not the entire array
+4. Input n = 0 for rotateLeft, lookUpAny, n1 = 0 for subsequence
+	To see whether function correctly returns -1, since rotateLeft cannot copy or access any possible given pos element arguments to rotate in an empty array, and lookUpAny similarly cannot access any elements in an array without elements. Also an array sequence can’t be a subsequence of an empty array
+5. Input pos > n for rotateLeft
+	To see whether function correctly returns -1, since the function cannot access any elements at position pos outside of the n elements it is aware of
+6. Input n = 0 for positionOfMax
+	To see whether function correctly returns -1, since it is nonsense to find a maximum element in an array with no elements, which makes n = 0 bad input.
+7. Input n = 0 in countRuns
+	To see whether function correctly returns 0, as an empty array would have no consecutive identical items
+8. Input n1 = 0 or n2 = 0 to differ
+	To see whether the function correctly returns -1 as there is no initial element of the zero array to be the same or differ on
+
+
+
+*****For all following test cases, array: string h = {“”, “donald”, “evan”, “gary”, “hillary”, “jill”, “tim”}
+
+appendToAll Test Cases
+1. Input (h, 7, “!!!”) into appendToAll
+	To see whether the function correctly appends the value to the end of each and all elements of the array starting from the beginning 0 index
+2. Input (h, 2, "")
+	To see whether the function will return 2 and append nothing to each element of the array, meaning it correctly handled an empty string
+3. Input (h, 4, "Hi")
+	To see if the function will append “Hi” only to the first 4 elements of h
+4.  string chips[] = {"lays", "doritos", "fritos", "tortilla", "", "bbq"};
+    string answer[] = {"lays chips", "doritos chips", "fritos chips", "tortilla chips", " chips", "bbq chips"};
+    assert(appendToAll(chips, 6, " chips") == 6 );
+5.  for(int i = 0; i < 6; i++){
+        assert(chips[i] == answer[i]);
+    }
+	//functionality check to see if string appended to original
+
+
+lookup Test Cases
+1. Input (h, 7, “jill”) to lookup
+	To see whether the function will correctly find the index of jill (5)
+2. Input (h, 5, “JiLL”) to lookup
+	To see whether the function will correctly distinguish differences in strings based on capital letters and return -1 since JiLL is not the same as jill
+3. Input (h, 1, “evan”) to lookup
+	To see whether the function will correctly return -1 since the target string is not within the elements the function can read from the array
+4.  string countries[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    assert(lookup(countries, 5, "italy") == -1); 
+	//return -1 if country not found
+5.  assert(lookup(countries, -1, "india") == -1);
+	//return -1 because illegal array size
+6.  assert(lookup(countries, 3, "japan") == -1); 
+	//return -1. country not found in first three
+7.  assert(lookup(countries, 5, "turkEy") == -1); 
+	//return -1 because case-sensitive
+8.  assert(lookup(countries, 0, "china") == -1); 
+	//return 0 because no elements to look at
+9. assert(lookup(countries, 5, "mexico") == 2); 
+	//return 2 because mexico in position 2
+10. assert(lookup(countries, 5, "turkey") == 3); 
+	//return 3 because turkey first in position 3
+
+
+positionOfMax Test Cases
+1. Input (h, 7) into positionOfMax
+	To see whether the function can correctly identify which element of the array is largest (based on comparing unicode characters)
+2. Input (f, 7) into positionOfMax when f is an array of strings of only “hillary”
+	To see whether the function will correctly find the index of the largest string which is the first occurance of “hillary” at 0
+3. Input (h, 4)
+	To see if the function will find the largest element of only the first 4 elements of an array
+4. string animals[] = {"fox", "lion", "dog", "rat", "snake", "money", "moose", "wolves"};
+    assert(positionOfMax(animals, 8) == 7); 
+	//return 7 because wolves is last element
+    
+5.  assert(positionOfMax(animals, -3) == -1); 
+	//return -1 because illegal array size
+    
+6.  assert(positionOfMax(animals, 3) == 1); 
+	//return 1. animal found in first three is lion
+    
+7.  assert(positionOfMax(animals, 0) == -1); 
+	//return -1 because parameter is 0
+    
+8.  assert(positionOfMax(animals, 5) == 4); 
+	//return 4 because animal found in first
+9.  string names[] = {"jon", "kanye", "sean", "trav"};
+    assert(positionOfMax(names, 1) == 0); 
+	//return 0 because only 1 element to look at
+10. assert(positionOfMax(names, 3) == 2); 
+	//return 2. check to see if array is bounded
+
+rotateLeft Test Cases
+1. Input (h, 7, 6)
+	To see if the function correctly returns 6, the index of rotating the elements after it left and replacing the last element with the initial element
+2. Input (h, 4, 4)
+	To see if the function returns -1 and doesn’t change the array since if an array has 4 elements, index 4 is out of bounds as indices start from 0 to 3
+3. Input (h, 0, 3)
+	To see if the function returns -1 since you can’t rotate elements in an array with no elements. The array should also not change
+4. Input (h, 7, 3)
+	To see if the function returns 3 and rotates the elements of the array after index 3
+5. string brands[] = {"nike", "dolce", "gucci", "louis", "prada"};
+    string brandsRotateDolce[] = {"nike", "gucci", "louis", "prada", "dolce"};
+6.  assert(rotateLeft(brands, 5, 4) == 4); 
+	//functionality check. returns pos placement.
+7.  assert(rotateLeft(brands, -3, 5) == -1); 
+	//check for invalid array size
+8.  assert(rotateLeft(brands, 3, -2) == -1); 
+	//check for invalid pos
+9.  assert(rotateLeft(brands, 0, 2) == -1); 
+	//return -1 because array size is 0. pos must be 0
+10. assert(rotateLeft(brands, 3, 2) == 2); 
+	//check for bound. return pos functionality check
+    //output new array to check if function worked
+11.  assert(rotateLeft(brands, 5, 1) == 1);
+    //output array should be {nike, gucci, louis, prada, dolce}
+12.  for(int i = 0; i<5; i++){
+        assert(brands[i] == brandsRotateDolce[i]);
+    }
+
+
+countRuns Test Cases
+1. Input (h, 7)
+	To see if function will return 7, or the correct number of runs in an array with all unique elements (all runs)
+2. Input (f, 8) when f is {“hi”, “hi”, “hi”, “j”, “hi”, “j”, “haha”, “haha”}
+	To see if function will return 5 and recognize repeat runs still count as new runs
+3. Input (f, 2) when f is {“hi”, “hi”}
+	To see if function will return 1 since all elements are the same in the array, so there’s only one run
+4. string rappers[] = {"kanye", "jay", "trav", "asap", "sean", "kdot"};
+    assert(countRuns(rappers, 6) == 6); 
+	//normal check to check functionality
+5.  assert(countRuns(rappers, -3) == -1); 
+	//return -1 because illegal array size
+6.  assert(countRuns(rappers, 0) == 0); 
+	//return 0 because parameter is 0
+    string rappersDup[] = {"kanye", "jay", "kanye", "asap", "kanye", "kdot"};
+7.  assert(countRuns(rappersDup, 6) == 6); 
+	//return 4. 4 unique items in list
+8.  assert(countRuns(rappersDup, 3) == 3); 
+	//return 2 because bounded to first 3 elements
+9.  assert(countRuns(rappers, 1) == 1); 
+	//return 1 because only 1 unique element to look at
+10. string rappersBound[] = {"kanye", "jay", "trav", "jay", "sean", "kdot"};
+    assert(countRuns(rappersBound, 4) == 4); 
+	//return 3. check for bound and unique elements
+    string dasTest[] = {
+        "tim", "ajamu", "mike", "mike", "donald", "donald", "donald", "mike", "mike"
+    };
+11. assert(countRuns(dasTest, 9) == 5); 
+	//counting how many runs, to see if it’s 5
+
+
+
+flip Test Cases
+1. Input (h, 4)
+	To see if function can flip only the first elements and not the entire array, and should return the number of elements inputted
+2. Input (h, 7)
+	To see if the function can flip all elements of the array, even when the number of elements is odd (so the middle element should have the same position) and return number of elements
+3. string friends[] = {"syd", "ian", "costa", "nigel", "ally", "trav", "scott"};
+    assert(flip(friends, 5) == 5); 
+	//return 5 because return value 5. check for bound
+4.  assert(flip(friends, -1) == -1); 
+	//return -1 because illegal array size
+5.  assert(flip(friends,0) == 0); 
+	//return 0. friends flipped.
+6.  assert(flip(friends,7) ==7); 
+	//check normal array for functionality
+7.  string friendsBlank[] = {"syd", "ian", "", "nigel", "ally", "trav"};
+    assert(flip(friendsBlank, 6) == 6); 
+	//check for return 6 even though there is a blank.
+
+
+differ Test Cases where string c[4] = {"garyHi", "tim", "Jill", "Hi”}, string j[7] = {"garyHi", "tim", "jill", "Hi", "donaldHi", "evanHi", "hillary"}
+1. Input (h, 7, c, 4)
+	To see whether the function will correctly catch where c differs from h (at index 2)
+2. Input (h, 7, j, 7)
+	To see if the function identifies that the two arrays are the same and returns either n1 or n2
+3. Input (h, 3, j, 7)
+To see if the function can tell the two arrays are the same up to the point where h ends and the function can’t read h anymore, and returns the number of elements in the smaller array
+4. string country[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    string people[] = {"musk", "bell", "tesla", "stark"};
+    assert(differ(country, 6, people, 4) == 0); 
+	//return 0 because differ at 0
+5.  assert(differ(country, -4, people, 4) == -1); 
+	//return -1 because illegal array size
+6.  assert(differ(country, 6, people, -5) == -1); 
+	//return -1 because illegal array size
+7.  assert(differ(country, 3, people, 4) == 0); 
+	//return 0 because differ at 0
+8.  string job[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+    string random[] = {"business", "inventor", "tesla", "stark", "legend", "carter"};
+    assert(differ(job, 6, random, 6) == 2); 
+	//return 2 because differ at 2
+9.  string a[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+    string b[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+    assert(differ(a, 6, b, 6) == 6); 
+	//return 6 because end of arrays, all same
+10. string c[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+    string d6[] = {"business", "inventor", "", "hero", "music", "rapper"};
+    assert(differ(c, 6, d6, 6) == 2); 
+	//return 2 because the blank in d differs from c.
+
+subsequence Test Cases
+1.string a1[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    string a2[] = {"mexico", "turkey", "japan", "turkey"};
+2.  assert(subsequence(a1, 6, a2, 4) == 2); 
+	//return 2 because elements start matching
+3.  assert(subsequence(country, -4, people, 4) == -1); 
+	//return -1 because illegal array size
+4.  assert(subsequence(country, 6, people, -5) == -1); 
+	//return -1 because illegal array size
+5.  string b1[] = {"mexico", "turkey", "japan", "turkey"};
+    string b2[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    assert(subsequence(b1, 4, b2, 6) == -1); 
+	//return -1 because b2 bigger than b1
+6.  string c1[] = {"india", "china", "mexico", "mexico", "turkey", "japan"};
+    string c2[] = {"mexico", "turkey", "japan", "turkey"};
+    assert(subsequence(c1, 6, c2, 4) == -1); 
+	//return -1 because not enough room in c1 for all
+
+
+lookupAny Test Cases
+1. string d1[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    string d2[] = {"mexico", "turkey", "india", "turkey"};
+    assert(lookupAny(d1, 6, d2, 4) == 0); 
+	//return 0 because first element matchesd1
+2.  assert(lookupAny(d1, -4, d2, 4) == -1); 
+	//return -1 because illegal array size
+3.  assert(lookupAny(d1, 6, d2, -5) == -1); 
+	//return -1 because illegal array size
+4.  string e1[] = {"germany", "turkey", "japan", "turkey"};
+    string e2[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    assert(lookupAny(e1, 4, e2, 6) == 1); 
+	//return 1 because turkey matches in both arrays
+5.  string f1[] = {};
+    string f2[] = {"turkey"};
+    assert(lookupAny(f1, 0 ,f2, 1) == -1); 
+	//return -1 because no element in f1 same as f2
+6.  string g1[] = {"india", "china", "mexico", "mexico", "turkey", "japan"};
+    string g2[] = {};
+    assert(lookupAny(g1, 6, g2, 0) == -1); 
+	//return -1 because no element in g1 is same as g2
+7.  string h1[] = {"earth", "mars", "jupiter", "saturn", "mercury", "uranus"};
+    string h2[] = {"americas", "saturn", "europe", "asia", "aussie", "latinA"};
+    assert(lookupAny(h1, 4, h2, 2) == 3); 
+	//check for bounded. matching elements at index 3
+8.  assert(lookupAny(h1, 5, h2, 6) == 3); 
+	//return -1 because array out of bound
+9.  assert(lookupAny(h1, 3, h2, 1) == -1); 
+	//return -1 because no element in h1 is same as h2
+10. string i1[] = {"earth", "mars", "jupiter", "saturn", "mercury", "uranus"};
+    string i2[] = {"americas", "jupiter", "europe", "uranus"};
+    assert(lookupAny(i1, 6, i2, 4) == 2); 
+	//check if lowest index matching returned
+
+
+
+separate Test Cases
+1.string cars[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw"};
+    string blank[] = {"", "", "", "", ""};
+    assert(separate(cars, 7, "zzz") == 7); 
+	//check for last position. greatest sep value
+2.  assert(separate(cars, 7, "aston") == 0); 
+	//check for first position. least sep value
+3.  assert(separate(blank, 3, "") == 0); 
+	//check for seperating lowest value. all same. 0 pos.
+4.  assert(separate(cars, 0, "ford") == 0); 
+	//check bounds. insert in 0 pos because size arr 0
+5.  assert(separate(cars, -5, "chevy") == -1); 
+	//check for invalid array size
+6.  assert(separate(cars, 7, "chevy") == 1); 
+	//check for functionality.
+7.  string moreCars[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw", "chevy"};
+    string moreBlank[] = {"", "", "", "", ""};
+    assert(separate(moreCars, 8, "zzz") == 8); 
+	//check for last position. greatest sep value
+8.  assert(separate(moreCars, 8, "aston") == 0); 
+	//check for first position. least sep value
+9.  assert(separate(moreBlank, 3, "") == 0); 
+	//check for seperating lowest value. all same. 0 pos.
+10. assert(separate(moreCars, 0, "ford") == 0); 
+	//check bounds. insert in 0 pos because size arr 0
+11. assert(separate(moreCars, -5, "chevy") == -1); 
+	//check for invalid array size
+12. assert(separate(moreCars, 8, "chevy") == 1); 
+	//check for functionality. w

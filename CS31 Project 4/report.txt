@@ -48,20 +48,20 @@ lookup Test Cases
 	To see whether the function will correctly distinguish differences in strings based on capital letters and return -1 since JiLL is not the same as jill
 3. Input (h, 1, “evan”) to lookup
 	To see whether the function will correctly return -1 since the target string is not within the elements the function can read from the array
-4.  string countries[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
-    assert(lookup(countries, 5, "italy") == -1); 
+4.  string list[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
+    assert(lookup(list, 5, "italy") == -1); 
 	//return -1 if country not found
-5.  assert(lookup(countries, -1, "india") == -1);
+5.  assert(lookup(list, -1, "india") == -1);
 	//return -1 because illegal array size
-6.  assert(lookup(countries, 3, "japan") == -1); 
+6.  assert(lookup(list, 3, "japan") == -1); 
 	//return -1. country not found in first three
-7.  assert(lookup(countries, 5, "turkEy") == -1); 
+7.  assert(lookup(list, 5, "turkEy") == -1); 
 	//return -1 because case-sensitive
-8.  assert(lookup(countries, 0, "china") == -1); 
+8.  assert(lookup(list, 0, "china") == -1); 
 	//return 0 because no elements to look at
-9. assert(lookup(countries, 5, "mexico") == 2); 
+9. assert(lookup(list, 5, "mexico") == 2); 
 	//return 2 because mexico in position 2
-10. assert(lookup(countries, 5, "turkey") == 3); 
+10. assert(lookup(list, 5, "turkey") == 3); 
 	//return 3 because turkey first in position 3
 
 
@@ -87,10 +87,10 @@ positionOfMax Test Cases
     
 8.  assert(positionOfMax(animals, 5) == 4); 
 	//return 4 because animal found in first
-9.  string names[] = {"jon", "kanye", "sean", "trav"};
-    assert(positionOfMax(names, 1) == 0); 
+9.  string people[] = {"jon", "kanye", "sean", "trav"};
+    assert(positionOfMax(people, 1) == 0); 
 	//return 0 because only 1 element to look at
-10. assert(positionOfMax(names, 3) == 2); 
+10. assert(positionOfMax(people, 3) == 2); 
 	//return 2. check to see if array is bounded
 
 rotateLeft Test Cases
@@ -129,22 +129,22 @@ countRuns Test Cases
 	To see if function will return 5 and recognize repeat runs still count as new runs
 3. Input (f, 2) when f is {“hi”, “hi”}
 	To see if function will return 1 since all elements are the same in the array, so there’s only one run
-4. string rappers[] = {"kanye", "jay", "trav", "asap", "sean", "kdot"};
-    assert(countRuns(rappers, 6) == 6); 
+4. string artists[] = {"kanye", "jay", "trav", "asap", "sean", "kdot"};
+    assert(countRuns(artists, 6) == 6); 
 	//normal check to check functionality
-5.  assert(countRuns(rappers, -3) == -1); 
+5.  assert(countRuns(artists, -3) == -1); 
 	//return -1 because illegal array size
-6.  assert(countRuns(rappers, 0) == 0); 
+6.  assert(countRuns(artists, 0) == 0); 
 	//return 0 because parameter is 0
-    string rappersDup[] = {"kanye", "jay", "kanye", "asap", "kanye", "kdot"};
-7.  assert(countRuns(rappersDup, 6) == 6); 
+    string artistsDup[] = {"kanye", "jay", "kanye", "asap", "kanye", "kdot"};
+7.  assert(countRuns(artistsDup, 6) == 6); 
 	//return 4. 4 unique items in list
-8.  assert(countRuns(rappersDup, 3) == 3); 
+8.  assert(countRuns(artistsDup, 3) == 3); 
 	//return 2 because bounded to first 3 elements
-9.  assert(countRuns(rappers, 1) == 1); 
+9.  assert(countRuns(artists, 1) == 1); 
 	//return 1 because only 1 unique element to look at
-10. string rappersBound[] = {"kanye", "jay", "trav", "jay", "sean", "kdot"};
-    assert(countRuns(rappersBound, 4) == 4); 
+10. string artistsBound[] = {"kanye", "jay", "trav", "jay", "sean", "kdot"};
+    assert(countRuns(artistsBound, 4) == 4); 
 	//return 3. check for bound and unique elements
     string dasTest[] = {
         "tim", "ajamu", "mike", "mike", "donald", "donald", "donald", "mike", "mike"
@@ -181,25 +181,25 @@ differ Test Cases where string c[4] = {"garyHi", "tim", "Jill", "Hi”}, string 
 3. Input (h, 3, j, 7)
 To see if the function can tell the two arrays are the same up to the point where h ends and the function can’t read h anymore, and returns the number of elements in the smaller array
 4. string country[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
-    string people[] = {"musk", "bell", "tesla", "stark"};
-    assert(differ(country, 6, people, 4) == 0); 
+    string famous[] = {"musk", "bell", "tesla", "stark"};
+    assert(differ(country, 6, famous, 4) == 0); 
 	//return 0 because differ at 0
-5.  assert(differ(country, -4, people, 4) == -1); 
+5.  assert(differ(country, -4, famous, 4) == -1); 
 	//return -1 because illegal array size
-6.  assert(differ(country, 6, people, -5) == -1); 
+6.  assert(differ(country, 6, famous, -5) == -1); 
 	//return -1 because illegal array size
-7.  assert(differ(country, 3, people, 4) == 0); 
+7.  assert(differ(country, 3, famous, 4) == 0); 
 	//return 0 because differ at 0
-8.  string job[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+8.  string jobs[] = {"business", "inventor", "scientist", "hero", "music", "artist"};
     string random[] = {"business", "inventor", "tesla", "stark", "legend", "carter"};
-    assert(differ(job, 6, random, 6) == 2); 
+    assert(differ(jobs, 6, random, 6) == 2); 
 	//return 2 because differ at 2
-9.  string a[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
-    string b[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
+9.  string a[] = {"business", "inventor", "scientist", "hero", "music", "artist"};
+    string b[] = {"business", "inventor", "scientist", "hero", "music", "artist"};
     assert(differ(a, 6, b, 6) == 6); 
 	//return 6 because end of arrays, all same
-10. string c[] = {"business", "inventor", "scientist", "hero", "music", "rapper"};
-    string d6[] = {"business", "inventor", "", "hero", "music", "rapper"};
+10. string c[] = {"business", "inventor", "scientist", "hero", "music", "artist"};
+    string d6[] = {"business", "inventor", "", "hero", "music", "artist"};
     assert(differ(c, 6, d6, 6) == 2); 
 	//return 2 because the blank in d differs from c.
 
@@ -208,9 +208,9 @@ subsequence Test Cases
     string a2[] = {"mexico", "turkey", "japan", "turkey"};
 2.  assert(subsequence(a1, 6, a2, 4) == 2); 
 	//return 2 because elements start matching
-3.  assert(subsequence(country, -4, people, 4) == -1); 
+3.  assert(subsequence(country, -4, famous, 4) == -1); 
 	//return -1 because illegal array size
-4.  assert(subsequence(country, 6, people, -5) == -1); 
+4.  assert(subsequence(country, 6, famous, -5) == -1); 
 	//return -1 because illegal array size
 5.  string b1[] = {"mexico", "turkey", "japan", "turkey"};
     string b2[] = {"india", "china", "mexico", "turkey", "japan", "turkey"};
@@ -259,31 +259,31 @@ lookupAny Test Cases
 
 
 separate Test Cases
-1.string cars[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw"};
+1.string brandNames[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw"};
     string blank[] = {"", "", "", "", ""};
-    assert(separate(cars, 7, "zzz") == 7); 
+    assert(separate(brandNames, 7, "zzz") == 7); 
 	//check for last position. greatest sep value
-2.  assert(separate(cars, 7, "aston") == 0); 
+2.  assert(separate(brandNames, 7, "aston") == 0); 
 	//check for first position. least sep value
 3.  assert(separate(blank, 3, "") == 0); 
 	//check for seperating lowest value. all same. 0 pos.
-4.  assert(separate(cars, 0, "ford") == 0); 
+4.  assert(separate(brandNames, 0, "ford") == 0); 
 	//check bounds. insert in 0 pos because size arr 0
-5.  assert(separate(cars, -5, "chevy") == -1); 
+5.  assert(separate(brandNames, -5, "chevy") == -1); 
 	//check for invalid array size
-6.  assert(separate(cars, 7, "chevy") == 1); 
+6.  assert(separate(brandNames, 7, "chevy") == 1); 
 	//check for functionality.
-7.  string moreCars[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw", "chevy"};
+7.  string morebrandNames[] = {"honda", "toyota", "bmw", "mercedes", "lambo", "tesla", "vw", "chevy"};
     string moreBlank[] = {"", "", "", "", ""};
-    assert(separate(moreCars, 8, "zzz") == 8); 
+    assert(separate(morebrandNames, 8, "zzz") == 8); 
 	//check for last position. greatest sep value
-8.  assert(separate(moreCars, 8, "aston") == 0); 
+8.  assert(separate(morebrandNames, 8, "aston") == 0); 
 	//check for first position. least sep value
 9.  assert(separate(moreBlank, 3, "") == 0); 
 	//check for seperating lowest value. all same. 0 pos.
-10. assert(separate(moreCars, 0, "ford") == 0); 
+10. assert(separate(morebrandNames, 0, "ford") == 0); 
 	//check bounds. insert in 0 pos because size arr 0
-11. assert(separate(moreCars, -5, "chevy") == -1); 
+11. assert(separate(morebrandNames, -5, "chevy") == -1); 
 	//check for invalid array size
-12. assert(separate(moreCars, 8, "chevy") == 1); 
+12. assert(separate(morebrandNames, 8, "chevy") == 1); 
 	//check for functionality. w
